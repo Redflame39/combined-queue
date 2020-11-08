@@ -23,9 +23,16 @@ public class CombinedQueue {
             int j = 0;
             for (WeighedQueue wq : weighedQueues) {
                 int toProcess = (int) Math.floor(remaining * wq.rate);
-                for (int i = 0; i < toProcess; i++) {
-                    processed.weighedQueues.get(j).insert(new Node(wq.extract().item));
-                    processed.size++;
+                if (toProcess <= wq.size) {
+                    for (int i = 0; i < toProcess; i++) {
+                        processed.weighedQueues.get(j).insert(new Node(wq.extract().item));
+                        processed.size++;
+                    }
+                } else {
+                    for (int i = 0; i < wq.size; i++) {
+                        processed.weighedQueues.get(j).insert(new Node(wq.extract().item));
+                        processed.size++;
+                    }
                 }
                 j++;
             }
